@@ -10,5 +10,6 @@ import java.util.HashMap;
 
 @Getter
 public class ConfigurationPlugin extends OkaeriConfig {
-//    @Comment("Nothing here")
+    @Comment("Waiting time")
+    private int waitingTime = 12;
 }
