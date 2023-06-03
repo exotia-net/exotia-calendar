@@ -1,14 +1,18 @@
 package net.exotia.plugins.calendar.gui;
 
+import eu.okaeri.configs.OkaeriConfig;
+import io.th0rgal.oraxen.api.OraxenItems;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.List;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 @Builder
-@Getter
-@Setter
-public class GuiButton {
-    private List<Integer> slots;
+public class GuiButton extends OkaeriConfig {
+    private String id;
+    private String type;
+
+    public ItemStack getItem() {
+        if (type.equalsIgnoreCase("minecraft")) return new ItemStack(Material.valueOf(id.toUpperCase()));
+        return OraxenItems.getItemById(id).build();
+    }
 }

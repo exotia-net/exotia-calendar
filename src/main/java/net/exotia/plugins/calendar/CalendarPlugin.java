@@ -11,12 +11,11 @@ import net.exotia.plugins.calendar.command.CommandCalendar;
 import net.exotia.plugins.calendar.configuration.ConfigurationFactory;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
 import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
-import net.exotia.plugins.calendar.configuration.ConfigurationPlugin;
 import net.exotia.plugins.calendar.handler.HandlerInvalid;
 import net.exotia.plugins.calendar.handler.HandlerUnauthorized;
 import net.exotia.plugins.calendar.listener.ListenerJoinQuit;
 import net.exotia.plugins.calendar.utils.UtilMessage;
-import net.exotia.plugins.calendar.utils.UtilPlayers;
+import net.exotia.plugins.calendar.calendar.CalendarPlayers;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -31,7 +30,7 @@ public final class CalendarPlugin extends JavaPlugin {
     private static Plugin plugin;
     @Getter
     private static BukkitAudiences audiences;
-    private ConfigurationPlugin configurationPlugin;
+    private final ConfigurationFactory configurationFactory = new ConfigurationFactory(this.getDataFolder());
     private ConfigurationMessage configurationMessage;
     private ConfigurationGui configurationGui;
 
@@ -42,6 +41,7 @@ public final class CalendarPlugin extends JavaPlugin {
 
         injector.registerInjectable(plugin);
         injector.registerInjectable(injector);
+        injector.registerInjectable(configurationFactory);
 
         setupConfiguration();
         setupUtils();
@@ -55,41 +55,39 @@ public final class CalendarPlugin extends JavaPlugin {
     }
 
     private void setupConfiguration() {
-        ConfigurationFactory configurationFactory = new ConfigurationFactory(this.getDataFolder());
-        configurationPlugin = configurationFactory.produce(ConfigurationPlugin.class, "config.yml");
-        injector.registerInjectable(configurationPlugin);
         configurationMessage = configurationFactory.produce(ConfigurationMessage.class, "messages.yml");
-        injector.registerInjectable(configurationMessage);
         configurationGui = configurationFactory.produce(ConfigurationGui.class, "guis.yml");
+
+        injector.registerInjectable(configurationMessage);
         injector.registerInjectable(configurationGui);
     }
 
     private void setupUtils() {
-        injector.registerInjectable(new UtilPlayers());
+        injector.registerInjectable(new CalendarPlayers());
     }
 
     private void setupCommands() {
         LiteBukkitFactory.builder(this.getServer(), "exotia.net")
-                .argument(Player.class, new BukkitPlayerArgument<>(this.getServer(), UtilMessage.getMessage(configurationMessage.getCommandsPlayer().getOffline())))
-                .contextualBind(Player.class, new BukkitOnlyPlayerContextual<>(UtilMessage.getMessage(configurationMessage.getCommandsPlayer().getOnly())))
-                .commandInstance(
-                        injector.createInstance(CommandReload.class),
-                        injector.createInstance(CommandCalendar.class)
-                )
-                .invalidUsageHandler(injector.createInstance(HandlerInvalid.class))
-                .permissionHandler(injector.createInstance(HandlerUnauthorized.class))
-                .register();
+            .argument(Player.class, new BukkitPlayerArgument<>(this.getServer(), UtilMessage.getMessage(configurationMessage.getCommandsPlayer().getOffline())))
+            .contextualBind(Player.class, new BukkitOnlyPlayerContextual<>(UtilMessage.getMessage(configurationMessage.getCommandsPlayer().getOnly())))
+            .commandInstance(
+                    injector.createInstance(CommandReload.class),
+                    injector.createInstance(CommandCalendar.class)
+            )
+            .invalidUsageHandler(injector.createInstance(HandlerInvalid.class))
+            .permissionHandler(injector.createInstance(HandlerUnauthorized.class))
+            .register();
     }
 
     private void setupEvents() {
         Stream.of(
-                injector.createInstance(ListenerJoinQuit.class)
+            injector.createInstance(ListenerJoinQuit.class)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
     }
 
     private void cleanUp() {
         getServer().getMessenger().unregisterOutgoingPluginChannel(this);
-        configurationPlugin.save();
+
         configurationMessage.save();
         configurationGui.save();
     }

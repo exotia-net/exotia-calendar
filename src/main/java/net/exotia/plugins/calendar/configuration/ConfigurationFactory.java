@@ -21,9 +21,9 @@ public class ConfigurationFactory {
 
     public <T extends OkaeriConfig> T produce(@NonNull Class<T> type, @NonNull File file) {
         return ConfigManager.create(type, it -> it
-                .withConfigurer(new YamlBukkitConfigurer())
-                .withBindFile(file)
-                .withSerdesPack(new SerdesBukkit())
-                .saveDefaults().load(true));
+            .withConfigurer(new YamlBukkitConfigurer())
+            .withBindFile(file)
+            .withSerdesPack(new SerdesBukkit())
+            .saveDefaults().load(true));
     }
 }
