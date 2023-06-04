@@ -14,23 +14,25 @@ public class CalendarPlayer {
     private long lastObtained;
     private int streakDays;
 
-    public boolean stepUp() {
-        return canObtain();
-    }
-
-    public void addStep() {
+    public void addStep(int size) {
+        if (this.step >= size) return;
         if (hasStreak()) streakDays++;
         step++;
         lastObtained = Instant.now().toEpochMilli();
     }
 
-    private boolean canObtain() {
+    public void addStreak() {
+        streakDays++;
+    }
+
+    public boolean canObtain() {
         LocalDateTime last = LocalDateTime.ofInstant(Instant.ofEpochMilli(lastObtained), ZoneId.systemDefault());
         return LocalDateTime.now().isAfter(last.plusDays(1).withHour(6));
     }
 
     private boolean hasStreak() {
         if (lastObtained == 0) return true;
+        if (streakDays == 4) return false;
         LocalDateTime last = LocalDateTime.ofInstant(Instant.ofEpochMilli(lastObtained), ZoneId.systemDefault());
         return LocalDateTime.now().minusHours(40).isBefore(last);
     }

@@ -18,6 +18,9 @@ public class ConfigurationMessage extends OkaeriConfig {
     @Comment("Reload Command")
     private CommandsReload commandsReload = new CommandsReload();
 
+    @Comment("Join Event")
+    private EventsJoin eventsJoin = new EventsJoin();
+
     @Comment("Sounds")
     private Sounds sounds = new Sounds();
 
@@ -41,6 +44,11 @@ public class ConfigurationMessage extends OkaeriConfig {
     public class CommandsReload extends OkaeriConfig {
         private String success = "鱂 Konfiguracja <gradient:#4fa943:#9ec52f><bold>przeładowana!</bold></gradient>";
         private String failed = "鱂 Wystąpił <gradient:#4fa943:#9ec52f><bold>błąd</bold></gradient> przy przeładowywaniu <gradient:#4fa943:#9ec52f><bold>konfiguracji!</bold></gradient> Stworzono nowe <gradient:#4fa943:#9ec52f><bold>pliki konfiguracyjne!</bold></gradient>";
+    }
+
+    @Getter
+    public class EventsJoin extends OkaeriConfig {
+        private String obtainable = "鱂 <click:run_command:/dzienne>Hej, pamiętaj o odebraniu <gradient:#4fa943:#9ec52f><bold>nagrody</bold></gradient> za <gradient:#4fa943:#9ec52f><bold>dzień %value_1%!</bold></gradient> Odbierz je pod <gradient:#4fa943:#9ec52f><bold>/dzienne</bold></gradient></click>";
     }
 
     @Getter

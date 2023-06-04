@@ -30,7 +30,6 @@ public class ConfigurationGui extends OkaeriConfig {
         private List<Integer> slotsRewards = Arrays.asList(1, 2, 3, 4, 5, 7);
         private List<Integer> slotsStreak = Arrays.asList(10, 11, 12, 13, 14);
         private HashMap<String, GuiButton> buttons = setupButtons();
-//        private List<String> slotsNames = Arrays.asList()
     }
 
     private HashMap<String, GuiButton> setupButtons() {
