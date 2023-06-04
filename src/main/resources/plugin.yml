@@ -1,6 +1,6 @@
-name: exotia-calendar
+name: ExotiaCalendar
 version: 1.0
-author: exotia.net Team
+author: Exotia.net Team
 website: https://exotia.net/
 description: Spigot Plugin for Exotia.net daily reward system
 main: net.exotia.plugins.calendar.CalendarPlugin

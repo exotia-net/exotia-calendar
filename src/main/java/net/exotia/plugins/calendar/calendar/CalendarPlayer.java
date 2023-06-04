@@ -12,14 +12,16 @@ import java.time.*;
 public class CalendarPlayer {
     private int step;
     private long lastObtained;
-    private boolean streak;
+    private int streakDays;
 
     public boolean stepUp() {
-        if (!canObtain()) return false;
+        return canObtain();
+    }
+
+    public void addStep() {
+        if (hasStreak()) streakDays++;
         step++;
-        streak = hasStreak();
         lastObtained = Instant.now().toEpochMilli();
-        return true;
     }
 
     private boolean canObtain() {

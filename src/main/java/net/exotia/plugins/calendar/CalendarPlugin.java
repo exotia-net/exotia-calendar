@@ -11,6 +11,7 @@ import net.exotia.plugins.calendar.command.CommandCalendar;
 import net.exotia.plugins.calendar.configuration.ConfigurationFactory;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
 import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
+import net.exotia.plugins.calendar.gui.GuiCalendar;
 import net.exotia.plugins.calendar.handler.HandlerInvalid;
 import net.exotia.plugins.calendar.handler.HandlerUnauthorized;
 import net.exotia.plugins.calendar.listener.ListenerJoinQuit;
@@ -64,6 +65,7 @@ public final class CalendarPlugin extends JavaPlugin {
 
     private void setupUtils() {
         injector.registerInjectable(new CalendarPlayers());
+        injector.registerInjectable(injector.createInstance(GuiCalendar.class));
     }
 
     private void setupCommands() {

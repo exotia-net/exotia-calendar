@@ -10,12 +10,12 @@ public class CalendarPlayers {
         return calendarPlayers.get(playerUUID);
     }
 
-    public void addPlayer(UUID playerUUID, int step, long lastObtained, boolean streak) {
+    public void addPlayer(UUID playerUUID, int step, long lastObtained, int streakDays) {
         calendarPlayers.put(playerUUID,
             CalendarPlayer.builder()
                 .step(step)
                 .lastObtained(lastObtained)
-                .streak(streak)
+                .streakDays(streakDays)
                 .build()
         );
     }

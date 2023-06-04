@@ -26,6 +26,10 @@ public class UtilMessage {
         return MiniMessage.miniMessage().deserialize(message.replace("&", "").replace("§f", ""));
     }
 
+    public static String getString(String message) {
+        return LegacyComponentSerializer.legacySection().serialize(MiniMessage.miniMessage().deserialize("<white>" + message));
+    }
+
     public static void playSound(Player player, String soundName) {
         player.playSound(player, Sound.valueOf(soundName.toUpperCase()), 1F, 1F);
     }

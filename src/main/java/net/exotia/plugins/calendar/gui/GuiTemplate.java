@@ -16,9 +16,11 @@ import java.util.List;
 @Getter
 public class GuiTemplate extends OkaeriConfig {
     private String title;
+    private String alternateTitle;
     private int size;
     private List<Integer> slotsEmpty;
     private List<Integer> slotsRewards;
+    private List<Integer> slotsStreak;
     private HashMap<String, GuiButton> buttons;
 
     public static void setupGui(BaseGui gui, List<Integer> emptySlots, ConfigurationMessage configurationMessage) {

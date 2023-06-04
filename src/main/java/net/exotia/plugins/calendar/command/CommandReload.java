@@ -12,9 +12,7 @@ import net.exotia.plugins.calendar.utils.UtilMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.FileNotFoundException;
-
-@Route(name = "exotiacalendar", aliases = "ec")
+@Route(name = "calendar", aliases = {"kalendarz", "dzienne"})
 @Permission("exotia.calendar.command.reload")
 public class CommandReload {
     @Inject
@@ -24,7 +22,7 @@ public class CommandReload {
     @Inject
     private ConfigurationGui configurationGui;
 
-    @Execute
+    @Execute(route = "reload", aliases = "przeladuj")
     public void reload(CommandSender sender) {
         try {
             configurationMessage.load(true);
