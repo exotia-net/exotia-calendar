@@ -41,8 +41,8 @@ public class GuiCalendar {
         int step = calendarPlayer.getStep();
         int streakDays = calendarPlayer.getStreakDays();
 
-        Bukkit.broadcastMessage("Step: " + step);
-        Bukkit.broadcastMessage("Streak: " + streakDays);
+        Bukkit.broadcastMessage("Step: " + step); // REMOVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        Bukkit.broadcastMessage("Streak: " + streakDays); // REMOVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
         if (!calendarPlayer.stepUp()) gui.setItem(slotsRewards.get(step), buttons.get("wygasly").getButton(player, sounds.getError()));
         else {
