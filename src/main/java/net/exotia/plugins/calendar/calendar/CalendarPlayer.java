@@ -30,6 +30,7 @@ public class CalendarPlayer {
     }
 
     private boolean hasStreak() {
+        if (lastObtained == 0) return true;
         LocalDateTime last = LocalDateTime.ofInstant(Instant.ofEpochMilli(lastObtained), ZoneId.systemDefault());
         return LocalDateTime.now().minusHours(40).isBefore(last);
     }
