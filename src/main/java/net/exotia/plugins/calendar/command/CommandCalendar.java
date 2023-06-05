@@ -5,8 +5,8 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import eu.okaeri.injector.annotation.Inject;
-import net.exotia.plugins.calendar.calendar.CalendarPlayers;
-import net.exotia.plugins.calendar.gui.GuiCalendar;
+import net.exotia.plugins.calendar.calendar.player.CalendarPlayers;
+import net.exotia.plugins.calendar.calendar.gui.GuiCalendar;
 import org.bukkit.entity.Player;
 
 import java.time.Instant;

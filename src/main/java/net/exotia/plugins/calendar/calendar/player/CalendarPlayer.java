@@ -1,4 +1,4 @@
-package net.exotia.plugins.calendar.calendar;
+package net.exotia.plugins.calendar.calendar.player;
 
 import lombok.Builder;
 import lombok.Getter;

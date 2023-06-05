@@ -1,4 +1,4 @@
-package net.exotia.plugins.calendar.gui;
+package net.exotia.plugins.calendar.calendar.gui;
 
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.BaseGui;

@@ -18,6 +18,9 @@ public class ConfigurationMessage extends OkaeriConfig {
     @Comment("Reload Command")
     private CommandsReload commandsReload = new CommandsReload();
 
+    @Comment("Calendar Command")
+    private CommandsCalendar commandsCalendar = new CommandsCalendar();
+
     @Comment("Join Event")
     private EventsJoin eventsJoin = new EventsJoin();
 
@@ -47,8 +50,13 @@ public class ConfigurationMessage extends OkaeriConfig {
     }
 
     @Getter
+    public class CommandsCalendar extends OkaeriConfig {
+        private String obtain = "鱂 Odebrałeś/aś <gradient:#4fa943:#9ec52f><bold>nagrody dnia %value_1%!</bold></gradient> Dziękujemy za <gradient:#4fa943:#9ec52f><bold>aktywność!</bold></gradient>";
+    }
+
+    @Getter
     public class EventsJoin extends OkaeriConfig {
-        private String obtainable = "鱂 <click:run_command:/dzienne>Hej, pamiętaj o odebraniu <gradient:#4fa943:#9ec52f><bold>nagrody</bold></gradient> za <gradient:#4fa943:#9ec52f><bold>dzień %value_1%!</bold></gradient> Odbierz je pod <gradient:#4fa943:#9ec52f><bold>/dzienne</bold></gradient></click>";
+        private String obtainable = "鱂 <click:run_command:/dzienne>Pamiętaj o odebraniu <gradient:#4fa943:#9ec52f><bold>nagrody dnia %value_1%!</bold></gradient> Kliknij na wiadomość, aby <gradient:#4fa943:#9ec52f><bold>ją odebrać!</bold></gradient></click>";
     }
 
     @Getter

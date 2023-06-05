@@ -6,17 +6,18 @@ import dev.rollczi.litecommands.bukkit.tools.BukkitPlayerArgument;
 import eu.okaeri.injector.Injector;
 import eu.okaeri.injector.OkaeriInjector;
 import lombok.Getter;
-import net.exotia.plugins.calendar.command.CommandReload;
+import net.exotia.plugins.calendar.calendar.player.CalendarPlayers;
 import net.exotia.plugins.calendar.command.CommandCalendar;
+import net.exotia.plugins.calendar.command.CommandReload;
 import net.exotia.plugins.calendar.configuration.ConfigurationFactory;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
 import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
-import net.exotia.plugins.calendar.gui.GuiCalendar;
+import net.exotia.plugins.calendar.configuration.ConfigurationRewards;
+import net.exotia.plugins.calendar.calendar.gui.GuiCalendar;
 import net.exotia.plugins.calendar.handler.HandlerInvalid;
 import net.exotia.plugins.calendar.handler.HandlerUnauthorized;
 import net.exotia.plugins.calendar.listener.ListenerJoinQuit;
 import net.exotia.plugins.calendar.utils.UtilMessage;
-import net.exotia.plugins.calendar.calendar.CalendarPlayers;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -34,6 +35,7 @@ public final class CalendarPlugin extends JavaPlugin {
     private final ConfigurationFactory configurationFactory = new ConfigurationFactory(this.getDataFolder());
     private ConfigurationMessage configurationMessage;
     private ConfigurationGui configurationGui;
+    private ConfigurationRewards configurationRewards;
 
     @Override
     public void onEnable() {
@@ -58,9 +60,11 @@ public final class CalendarPlugin extends JavaPlugin {
     private void setupConfiguration() {
         configurationMessage = configurationFactory.produce(ConfigurationMessage.class, "messages.yml");
         configurationGui = configurationFactory.produce(ConfigurationGui.class, "guis.yml");
+        configurationRewards = configurationFactory.produce(ConfigurationRewards.class, "rewards.yml");
 
         injector.registerInjectable(configurationMessage);
         injector.registerInjectable(configurationGui);
+        injector.registerInjectable(configurationRewards);
     }
 
     private void setupUtils() {
@@ -92,5 +96,6 @@ public final class CalendarPlugin extends JavaPlugin {
 
         configurationMessage.save();
         configurationGui.save();
+        configurationRewards.save();
     }
 }
