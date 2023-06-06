@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilMessage {
-    public static Component replacePlaceholders(String message, String... values) {
+    private static Component replacePlaceholders(String message, String... values) {
         for (int i = 1; i <= values.length; i++) message = message.replace("%value_" + i + "%", values[i - 1]);
         return MiniMessage.miniMessage().deserialize(message.replace("&", "").replace("§f", ""));
     }
@@ -42,7 +42,6 @@ public class UtilMessage {
         for (String line : list) newList.add(LegacyComponentSerializer.legacySection().serialize(replacePlaceholders("<gray>" + line, values)));
         return newList;
     }
-
 
     public static void playSound(Player player, String soundName) {
         player.playSound(player, Sound.valueOf(soundName.toUpperCase()), 1F, 1F);

@@ -11,11 +11,11 @@ public class UtilItem {
     public static ItemStack getItem(String id, String type, String displayName, List<String> lore, int amount) {
         ItemStack item = (type.equalsIgnoreCase("minecraft")) ? new ItemStack(Material.valueOf(id.toUpperCase())) : OraxenItems.getItemById(id).build();
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
+        if (amount > 0) item.setAmount(amount);
+        if (meta == null || displayName == null || lore == null) return item;
         meta.setDisplayName(displayName);
         meta.setLore(lore);
         item.setItemMeta(meta);
-        item.setAmount(amount);
         return item;
     }
 }

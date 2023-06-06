@@ -20,11 +20,15 @@ public class GuiButton extends OkaeriConfig {
     private String displayName;
     private List<String> lore;
 
-    public GuiItem getButton(Player player, String sound, String displayName, List<String> lore) {
-        return ItemBuilder.from(UtilItem.getItem(id, type, displayName, lore, 1)).asGuiItem(event -> UtilMessage.playSound(player, sound));
+    public void addRewards(List<String> rewards) {
+        lore.addAll(rewards);
     }
 
-    public ItemStack getItem(String displayName, List<String> lore) {
-        return UtilItem.getItem(id, type, displayName, lore, 1);
+    public ItemStack getItem(String... placeholders) {
+        return UtilItem.getItem(id, type, UtilMessage.convertComponent(displayName, placeholders), UtilMessage.convertComponent(lore, placeholders), 1);
+    }
+
+    public GuiItem getGuiItem(Player player, String sound, String... placeholders) {
+        return ItemBuilder.from(UtilItem.getItem(id, type, UtilMessage.convertComponent(displayName, placeholders), UtilMessage.convertComponent(lore, placeholders), 1)).asGuiItem(event -> UtilMessage.playSound(player, sound));
     }
 }

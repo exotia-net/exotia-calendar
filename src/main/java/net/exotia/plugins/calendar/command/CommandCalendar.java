@@ -24,6 +24,12 @@ public class CommandCalendar {
         guiCalendar.open(player);
     }
 
+    @Route(name = "admin reset")
+    @Permission("exotia.calendar.command.admin")
+    public void reset(@Arg Player player) {
+        calendarPlayers.resetPlayer(player.getUniqueId());
+    }
+
     @Route(name = "admin last")
     @Permission("exotia.calendar.command.admin")
     public void setLast(@Arg Player player, @Arg Instant last) {
@@ -42,7 +48,7 @@ public class CommandCalendar {
         calendarPlayers.getPlayer(player.getUniqueId()).setStreakDays(streakDays);
     }
 
-    @Route(name = "admin everything")
+    @Route(name = "admin set")
     @Permission("exotia.calendar.command.admin")
     public void setEverything(@Arg Player player, @Arg Instant last, @Arg int step, @Arg int streakDays) {
         calendarPlayers.getPlayer(player.getUniqueId()).setLastObtained(last.toEpochMilli());

@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Route(name = "calendar", aliases = {"kalendarz", "dzienne"})
-@Permission("exotia.calendar.command.reload")
+@Permission("exotia.calendar.command.admin")
 public class CommandReload {
     @Inject
     private ConfigurationFactory configurationFactory;
@@ -25,7 +25,7 @@ public class CommandReload {
     @Inject
     private ConfigurationRewards configurationRewards;
 
-    @Execute(route = "reload", aliases = "przeladuj")
+    @Execute(route = "admin reload")
     public void reload(CommandSender sender) {
         try {
             configurationMessage.load(true);

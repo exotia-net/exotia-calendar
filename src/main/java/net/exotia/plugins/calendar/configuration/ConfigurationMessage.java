@@ -56,7 +56,7 @@ public class ConfigurationMessage extends OkaeriConfig {
 
     @Getter
     public class EventsJoin extends OkaeriConfig {
-        private String obtainable = "鱂 <click:run_command:/dzienne>Pamiętaj o odebraniu <gradient:#4fa943:#9ec52f><bold>nagrody dnia %value_1%!</bold></gradient> Kliknij na wiadomość, aby <gradient:#4fa943:#9ec52f><bold>ją odebrać!</bold></gradient></click>";
+        private String obtainable = "鱂 <click:run_command:/dzienne>Pamiętaj o odebraniu <gradient:#4fa943:#9ec52f><bold>nagrody dnia %value_1%!</bold></gradient>\nKliknij na wiadomość, aby <gradient:#4fa943:#9ec52f><bold>ją odebrać!</bold></gradient></click>";
     }
 
     @Getter

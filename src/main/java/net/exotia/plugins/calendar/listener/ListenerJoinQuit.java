@@ -11,8 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.UUID;
-
 public class ListenerJoinQuit implements Listener {
     @Inject
     private ConfigurationMessage configurationMessage;
@@ -24,12 +22,11 @@ public class ListenerJoinQuit implements Listener {
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        UUID playerUUID = player.getUniqueId();
-        if (calendarPlayers.getPlayer(playerUUID) == null) calendarPlayers.addPlayer(playerUUID,0,0, 0);
-        if (calendarPlayers.getPlayer(playerUUID).canObtain()) {
-            CalendarPlayer calendarPlayer = calendarPlayers.getPlayer(playerUUID);
-            calendarPlayer.addStep(configurationGui.getGuis().get("calendar").getSlotsRewards().size());
-            UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarPlayer.getStep()));
-        }
+        CalendarPlayer calendarPlayer = calendarPlayers.getPlayer(player.getUniqueId());
+
+        if (!calendarPlayer.canObtain()) return;
+
+        calendarPlayer.addNotObtained(calendarPlayer.getStep());
+        UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarPlayer.getStep() + 1));
     }
 }
