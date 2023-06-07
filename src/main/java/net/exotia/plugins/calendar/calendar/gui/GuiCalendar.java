@@ -26,26 +26,35 @@ public class GuiCalendar {
     private CalendarPlayers calendarPlayers;
 
     public void open(Player player) {
+        ConfigurationMessage.Sounds sounds = configurationMessage.getSounds();
         GuiTemplate guiTemplate = configurationGui.getGuis().get("calendar");
         Gui gui = Gui.gui().title(UtilMessage.getComponent("<white>" + guiTemplate.getTitle())).rows(guiTemplate.getSize()).create();
         CalendarPlayer calendarPlayer = calendarPlayers.getPlayer(player.getUniqueId());
         HashMap<String, GuiButton> buttons = guiTemplate.getButtons();
         HashMap<Integer, List<Reward>> rewards = configurationRewards.getRewards();
+        List<Integer> slotsRewards = guiTemplate.getSlotsRewards();
+        List<Integer> slotsStreak = guiTemplate.getSlotsStreak();
 
         GuiTemplate.setupGui(gui, guiTemplate.getSlotsEmpty(), configurationMessage);
 
-        for (int notObtainedSlot : calendarPlayer.getNotObtainedRewards())
-            gui.setItem(notObtainedSlot, ItemBuilder.from(buttons.get("zwykly_zamkniety").getItem()).asGuiItem(event -> {
+        for (int i = 0; i < slotsRewards.size() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("zwykly_otwarty").getGuiItem(player, sounds.getStep()));
 
+        for (int i = 0; i < calendarPlayer.getNotObtainedRewards().size(); i++) {
+            int slot = i;
+            gui.setItem(slotsRewards.get(slot), ItemBuilder.from(buttons.get("zwykly_zamkniety").getItem()).asGuiItem(event -> {
+                for (Reward reward : rewards.get(slot)) reward.rewardPlayer(player);
+                gui.updateItem(slotsRewards.get(slot), ItemBuilder.from(buttons.get("zwykly_otwarty").getItem()).asGuiItem());
+                calendarPlayer.removeNotObtained(slot);
             }));
+        }
+
+
 
         gui.open(player);
     }
 
     public void fill() {
 //        ConfigurationMessage.Sounds sounds = configurationMessage.getSounds();
-//        List<Integer> slotsRewards = guiTemplate.getSlotsRewards();
-//        List<Integer> slotsStreak = guiTemplate.getSlotsStreak();
 //        int step = calendarPlayer.getStep();
 //        int streakDays = calendarPlayer.getStreakDays();
 //        List<Integer> notObtainedRewards =
