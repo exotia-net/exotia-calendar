@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class ListenerJoinQuit implements Listener {
+public class ListenerJoin implements Listener {
     @Inject
     private ConfigurationMessage configurationMessage;
     @Inject
@@ -27,6 +27,7 @@ public class ListenerJoinQuit implements Listener {
         if (!calendarPlayer.canObtain()) return;
 
         calendarPlayer.addNotObtained(calendarPlayer.getStep());
+        calendarPlayer.addStep(configurationGui.getGuis().get("calendar").getSlotsRewards().size());
         UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarPlayer.getStep() + 1));
     }
 }

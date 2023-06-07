@@ -1,5 +1,6 @@
 package net.exotia.plugins.calendar.calendar.gui;
 
+import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import eu.okaeri.injector.annotation.Inject;
 import net.exotia.plugins.calendar.calendar.player.CalendarPlayer;
@@ -28,21 +29,23 @@ public class GuiCalendar {
         GuiTemplate guiTemplate = configurationGui.getGuis().get("calendar");
         Gui gui = Gui.gui().title(UtilMessage.getComponent("<white>" + guiTemplate.getTitle())).rows(guiTemplate.getSize()).create();
         CalendarPlayer calendarPlayer = calendarPlayers.getPlayer(player.getUniqueId());
+        HashMap<String, GuiButton> buttons = guiTemplate.getButtons();
         HashMap<Integer, List<Reward>> rewards = configurationRewards.getRewards();
 
         GuiTemplate.setupGui(gui, guiTemplate.getSlotsEmpty(), configurationMessage);
-        gui.open(player);
 
         for (int notObtainedSlot : calendarPlayer.getNotObtainedRewards())
-            for (Reward reward : rewards.get(notObtainedSlot))
-                reward.rewardPlayer(player);
+            gui.setItem(notObtainedSlot, ItemBuilder.from(buttons.get("zwykly_zamkniety").getItem()).asGuiItem(event -> {
+
+            }));
+
+        gui.open(player);
     }
 
     public void fill() {
 //        ConfigurationMessage.Sounds sounds = configurationMessage.getSounds();
 //        List<Integer> slotsRewards = guiTemplate.getSlotsRewards();
 //        List<Integer> slotsStreak = guiTemplate.getSlotsStreak();
-//        HashMap<String, GuiButton> buttons = guiTemplate.getButtons();
 //        int step = calendarPlayer.getStep();
 //        int streakDays = calendarPlayer.getStreakDays();
 //        List<Integer> notObtainedRewards =

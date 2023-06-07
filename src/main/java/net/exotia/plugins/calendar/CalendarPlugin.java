@@ -16,7 +16,7 @@ import net.exotia.plugins.calendar.configuration.ConfigurationRewards;
 import net.exotia.plugins.calendar.calendar.gui.GuiCalendar;
 import net.exotia.plugins.calendar.handler.HandlerInvalid;
 import net.exotia.plugins.calendar.handler.HandlerUnauthorized;
-import net.exotia.plugins.calendar.listener.ListenerJoinQuit;
+import net.exotia.plugins.calendar.listener.ListenerJoin;
 import net.exotia.plugins.calendar.utils.UtilMessage;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
@@ -87,7 +87,7 @@ public final class CalendarPlugin extends JavaPlugin {
 
     private void setupEvents() {
         Stream.of(
-            injector.createInstance(ListenerJoinQuit.class)
+            injector.createInstance(ListenerJoin.class)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
     }
 
