@@ -6,8 +6,6 @@ import dev.rollczi.litecommands.bukkit.tools.BukkitPlayerArgument;
 import eu.okaeri.injector.Injector;
 import eu.okaeri.injector.OkaeriInjector;
 import lombok.Getter;
-import net.exotia.bridge.api.ExotiaBridgeInstance;
-import net.exotia.bridge.api.ExotiaBridgeProvider;
 import net.exotia.plugins.calendar.calendar.gui.GuiCalendar;
 import net.exotia.plugins.calendar.calendar.player.CalendarPlayers;
 import net.exotia.plugins.calendar.command.CommandCalendar;
@@ -43,13 +41,10 @@ public final class CalendarPlugin extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         audiences = BukkitAudiences.create(this);
-        ExotiaBridgeInstance exotiaBridgeInstance = ExotiaBridgeProvider.getProvider();
 
         injector.registerInjectable(plugin);
         injector.registerInjectable(injector);
         injector.registerInjectable(configurationFactory);
-        injector.registerInjectable(exotiaBridgeInstance.getEconomyService());
-        //injector.registerInjectable(exotiaBridgeInstance.getCalendarService());
 
         setupConfiguration();
         setupUtils();

@@ -3,7 +3,6 @@ package net.exotia.plugins.calendar.calendar.gui;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import eu.okaeri.injector.annotation.Inject;
-import net.exotia.bridge.api.user.ApiEconomyService;
 import net.exotia.plugins.calendar.calendar.player.CalendarPlayer;
 import net.exotia.plugins.calendar.calendar.player.CalendarPlayers;
 import net.exotia.plugins.calendar.calendar.rewards.Reward;
@@ -18,8 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GuiCalendar {
-    @Inject
-    private ApiEconomyService economyService;
     @Inject
     private ConfigurationMessage configurationMessage;
     @Inject
@@ -68,7 +65,7 @@ public class GuiCalendar {
             gui.setItem(slotsRewards.get(slot), ItemBuilder.from(buttons.get("zwykly_zamkniety").getItem(itemNames.get(index), String.valueOf(slot + 1))).asGuiItem(event -> {
                 UtilMessage.playSound(player, sounds.getActivate());
                 UtilMessage.sendMessage(player, configurationMessage.getCommandsCalendar().getObtain(), String.valueOf(slot + 1));
-                for (Reward reward : rewards.get(index)) reward.rewardPlayer(player, economyService);
+                for (Reward reward : rewards.get(index)) reward.rewardPlayer(player);
                 gui.updateItem(slotsRewards.get(slot), buttons.get("zwykly_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(index), String.valueOf(index + 1)));
                 calendarPlayer.removeNotObtained(index);
             }));

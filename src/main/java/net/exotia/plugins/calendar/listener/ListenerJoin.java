@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class ListenerJoin implements Listener {
     @Inject
@@ -29,5 +30,13 @@ public class ListenerJoin implements Listener {
         calendarPlayer.addNotObtained(calendarPlayer.getStep());
         calendarPlayer.addStep(configurationGui.getGuis().get("calendar").getSlotsRewards().size());
         UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarPlayer.getStep()));
+    }
+
+    @EventHandler
+    public void onQuitEvent(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+//        ApiCalendarService calendarService = ExotiaBridgeProvider.getProvider().getCalendarService();
+//
+//        calendarService.
     }
 }
