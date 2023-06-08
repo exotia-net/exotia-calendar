@@ -39,11 +39,12 @@ public class CalendarPlayer {
         notObtainedRewards.add(step);
     }
 
-    public void removeNotObtained(int step) {
-        if (notObtainedRewards.contains(step)) notObtainedRewards.remove(step);
+    public void removeNotObtained(int index) {
+        notObtainedRewards.remove(index);
     }
 
-    public boolean canObtain() {
+    public boolean canObtain(int size) {
+        if (this.step >= size) return false;
         return LocalDateTime.now().isAfter(LocalDateTime.ofInstant(Instant.ofEpochMilli(lastObtained), ZoneId.systemDefault()).plusDays(1).withHour(6));
     }
 }

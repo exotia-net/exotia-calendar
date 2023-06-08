@@ -34,39 +34,46 @@ public class ConfigurationGui extends OkaeriConfig {
 
     private HashMap<String, GuiButton> setupButtons() {
         HashMap<String, GuiButton> buttons = new HashMap<>();
-        buttons.put("wygasly", GuiButton.builder()
+        buttons.put("zwykly_wygasly", GuiButton.builder()
             .id("nagrody_prezenty_wygasly")
             .type("oraxen")
             .displayName("Nagrody <gradient:#4fa943:#9ec52f><bold>dnia %value_1%!</bold></gradient>")
-            .lore(Arrays.asList("%value_1%"))
+            .lore(Arrays.asList("<gradient:#4fa943:#9ec52f><bold>Niedostępne</bold></gradient>", "Zaloguj się przez", "następne dni,", "aby je uzyskać", "<gradient:#4fa943:#9ec52f><bold>Zawiera:</bold></gradient>"))
             .build()
         );
         buttons.put("zwykly_otwarty", GuiButton.builder()
             .id("nagrody_prezenty_zwykly_otwarty")
             .type("oraxen")
             .displayName("Nagrody <gradient:#4fa943:#9ec52f><bold>dnia %value_1%!</bold></gradient>")
-            .lore(Arrays.asList("%value_1%"))
+            .lore(Arrays.asList("<gradient:#4fa943:#9ec52f><bold>Odebrane</bold></gradient>", "Odebrałeś/aś już", "te nagrody!", "<gradient:#4fa943:#9ec52f><bold>Zawiera:</bold></gradient>"))
             .build()
         );
         buttons.put("zwykly_zamkniety", GuiButton.builder()
             .id("nagrody_prezenty_zwykly_zamkniety")
             .type("oraxen")
             .displayName("Nagrody <gradient:#4fa943:#9ec52f><bold>dnia %value_1%!</bold></gradient>")
-            .lore(Arrays.asList("%value_1%"))
+            .lore(Arrays.asList("<gradient:#4fa943:#9ec52f><bold>Do odebrania</bold></gradient>", "Kliknij, aby odebrać", "te nagrody!", "<gradient:#4fa943:#9ec52f><bold>Zawiera:</bold></gradient>"))
             .build()
+        );
+        buttons.put("bonusowy_wygasly", GuiButton.builder()
+                .id("nagrody_prezenty_wygasly")
+                .type("oraxen")
+                .displayName("Nagrody <gradient:#7776ff:#ae2cf1><bold>bonusowe!</bold></gradient>")
+                .lore(Arrays.asList("<gradient:#4fa943:#9ec52f><bold>Niedostępne</bold></gradient>", "Loguj się przez", "cały tydzień", "aby je uzyskać", "<gradient:#4fa943:#9ec52f><bold>Zawiera:</bold></gradient>"))
+                .build()
         );
         buttons.put("bonusowy_otwarty", GuiButton.builder()
             .id("nagrody_prezenty_bonusowy_otwarty")
             .type("oraxen")
             .displayName("Nagrody <gradient:#7776ff:#ae2cf1><bold>bonusowe!</bold></gradient>")
-            .lore(Arrays.asList("%value_1%"))
+            .lore(Arrays.asList("<gradient:#4fa943:#9ec52f><bold>Odebrane</bold></gradient>", "Odebrałeś/aś już", "te nagrody!", "<gradient:#4fa943:#9ec52f><bold>Zawiera:</bold></gradient>"))
             .build()
         );
         buttons.put("bonusowy_zamkniety", GuiButton.builder()
             .id("nagrody_prezenty_bonusowy_zamkniety")
             .type("oraxen")
             .displayName("Nagrody <gradient:#7776ff:#ae2cf1><bold>bonusowe!</bold></gradient>")
-            .lore(Arrays.asList("%value_1%"))
+            .lore(Arrays.asList("<gradient:#4fa943:#9ec52f><bold>Do odebrania</bold></gradient>", "Kliknij, aby odebrać", "te nagrody!", "<gradient:#4fa943:#9ec52f><bold>Zawiera:</bold></gradient>"))
             .build()
         );
         buttons.put("streak_wygasly", GuiButton.builder()

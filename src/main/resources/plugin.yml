@@ -6,3 +6,4 @@ description: Spigot Plugin for Exotia.net daily reward system
 main: net.exotia.plugins.calendar.CalendarPlugin
 api-version: 1.19
 softdepend: [ PlaceholderAPI, Oraxen ]
+depend: [ ExotiaBridge ]

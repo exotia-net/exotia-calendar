@@ -24,10 +24,10 @@ public class ListenerJoin implements Listener {
         Player player = event.getPlayer();
         CalendarPlayer calendarPlayer = calendarPlayers.getPlayer(player.getUniqueId());
 
-        if (!calendarPlayer.canObtain()) return;
+        if (!calendarPlayer.canObtain(configurationGui.getGuis().get("calendar").getSlotsRewards().size())) return;
 
         calendarPlayer.addNotObtained(calendarPlayer.getStep());
         calendarPlayer.addStep(configurationGui.getGuis().get("calendar").getSlotsRewards().size());
-        UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarPlayer.getStep() + 1));
+        UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarPlayer.getStep()));
     }
 }

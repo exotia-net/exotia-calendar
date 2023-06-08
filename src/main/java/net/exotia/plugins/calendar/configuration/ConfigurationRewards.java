@@ -21,6 +21,7 @@ public class ConfigurationRewards extends OkaeriConfig {
                 .rewardType("item")
                 .id("jedzenie_owoce_kiwi")
                 .itemType("oraxen")
+                .displayName("Kiwi dnia pierwszego")
                 .amount(1)
                 .build()
             ));
@@ -29,6 +30,7 @@ public class ConfigurationRewards extends OkaeriConfig {
                 .rewardType("item")
                 .id("jedzenie_owoce_truskawka")
                 .itemType("oraxen")
+                .displayName("Truskawka dnia drugiego")
                 .amount(1)
                 .build()
         ));
@@ -37,6 +39,7 @@ public class ConfigurationRewards extends OkaeriConfig {
                 .rewardType("item")
                 .id("jedzenie_owoce_borowki")
                 .itemType("oraxen")
+                .displayName("Borówki dnia trzeciego")
                 .amount(1)
                 .build()
         ));
@@ -45,6 +48,7 @@ public class ConfigurationRewards extends OkaeriConfig {
                 .rewardType("item")
                 .id("jedzenie_owoce_wisnia")
                 .itemType("oraxen")
+                .displayName("Wiśnia dnia czwartego")
                 .amount(1)
                 .build()
         ));
@@ -53,8 +57,7 @@ public class ConfigurationRewards extends OkaeriConfig {
                 .rewardType("item")
                 .id("jedzenie_owoce_banan")
                 .itemType("oraxen")
-                .displayName("Testowy")
-                .lore(Arrays.asList("Przedmiot", "Testowy"))
+                .displayName("Banan dnia piątego")
                 .amount(1)
                 .build()
         ));
@@ -63,8 +66,7 @@ public class ConfigurationRewards extends OkaeriConfig {
                 .rewardType("item")
                 .id("jedzenie_nabial_ser")
                 .itemType("oraxen")
-                .displayName("Testowy")
-                .lore(Arrays.asList("Przedmiot", "Testowy"))
+                .displayName("Bonusowy Ser")
                 .amount(1)
                 .build()
         ));

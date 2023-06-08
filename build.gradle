@@ -18,6 +18,7 @@ repositories {
     maven { url 'https://repo.panda-lang.org/releases' }
     maven { url "https://storehouse.okaeri.eu/repository/maven-public/" }
     maven { url 'https://jitpack.io' }
+    maven { url "https://repository.exotia.net/releases" }
 }
 
 dependencies {
@@ -44,6 +45,8 @@ dependencies {
 
     compileOnly 'me.clip:placeholderapi:2.11.2'
     compileOnly 'com.github.oraxen:oraxen:-SNAPSHOT'
+
+    compileOnly 'net.exotia.bridge:api:1.0.5'
 }
 
 jar {
