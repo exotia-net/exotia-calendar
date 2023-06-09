@@ -54,7 +54,7 @@ public class GuiCalendar {
         }
 
         for (int i = 0; i < slotsRewards.size() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("zwykly_wygasly").getGuiItem(player, sounds.getError(), itemNames.get(i), String.valueOf(i + 1)));
-        for (int i = 0; i < calendarPlayer.getStep() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("zwykly_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(i), String.valueOf(i + 1)));
+        for (int i = 0; i <= calendarPlayer.getStep() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("zwykly_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(i), String.valueOf(i + 1)));
 
         for (int slot : slotsStreak) gui.setItem(slot, buttons.get("streak_wygasly").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays)));
         for (int i = 0; i < streakDays; i++) gui.setItem(slotsStreak.get(i), buttons.get("streak_aktywny").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays)));
@@ -89,6 +89,7 @@ public class GuiCalendar {
         }
 
         gui.setItem(slot, buttons.get("bonusowy_wygasly").getGuiItem(player, sounds.getError(), itemNames.get(slotsRewards.size() - 1)));
+
         gui.open(player);
     }
 }

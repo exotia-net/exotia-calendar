@@ -36,7 +36,7 @@ public class ListenerJoin implements Listener {
     public void onQuitEvent(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 //        ApiCalendarService calendarService = ExotiaBridgeProvider.getProvider().getCalendarService();
-//
+//        TODO
 //        calendarService.
     }
 }
