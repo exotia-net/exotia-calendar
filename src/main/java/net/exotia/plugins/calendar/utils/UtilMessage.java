@@ -29,10 +29,6 @@ public class UtilMessage {
         return MiniMessage.miniMessage().deserialize(message.replace("&", "").replace("§f", ""));
     }
 
-    public static String getString(String message) {
-        return LegacyComponentSerializer.legacySection().serialize(MiniMessage.miniMessage().deserialize("<white>" + message));
-    }
-
     public static String convertComponent(String string, String... values) {
         return LegacyComponentSerializer.legacySection().serialize(replacePlaceholders("<white>" + string, values));
     }

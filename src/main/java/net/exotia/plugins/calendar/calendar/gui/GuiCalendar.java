@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GuiCalendar {
     @Inject
@@ -48,15 +49,16 @@ public class GuiCalendar {
         HashMap<Integer, List<String>> itemNames = new HashMap<>();
 
         for (int index : rewards.keySet()) {
-            List<String> itemList = new ArrayList<>();
-            for (Reward reward : rewards.get(index)) itemList.add("- " + reward.getDisplayName());
+            List<String> itemList = rewards.get(index).stream()
+                    .map(reward -> "- " + reward.getDisplayName())
+                    .collect(Collectors.toList());
             itemNames.put(index, itemList);
         }
 
         for (int i = 0; i < slotsRewards.size() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("zwykly_wygasly").getGuiItem(player, sounds.getError(), itemNames.get(i), String.valueOf(i + 1)));
         for (int i = 0; i <= calendarPlayer.getStep() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("zwykly_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(i), String.valueOf(i + 1)));
 
-        for (int slot : slotsStreak) gui.setItem(slot, buttons.get("streak_wygasly").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays)));
+        slotsStreak.forEach(slot -> gui.setItem(slot, buttons.get("streak_wygasly").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays))));
         for (int i = 0; i < streakDays; i++) gui.setItem(slotsStreak.get(i), buttons.get("streak_aktywny").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays)));
 
         for (int i = 0; i < calendarPlayer.getNotObtainedRewards().size(); i++) {
@@ -78,18 +80,17 @@ public class GuiCalendar {
             return;
         }
 
-        if (streakDays == slotsStreak.size()) {
-            gui.setItem(slot, ItemBuilder.from(buttons.get("bonusowy_zamkniety").getItem(itemNames.get(slotsRewards.size() - 1))).asGuiItem(event -> {
-                UtilMessage.playSound(player, sounds.getSuccess());
-                gui.updateItem(slot, buttons.get("bonusowy_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(slotsRewards.size() - 1)));
-                calendarPlayer.addStreak();
-            }));
+        if (streakDays != slotsStreak.size()) {
+            gui.setItem(slot, buttons.get("bonusowy_wygasly").getGuiItem(player, sounds.getError(), itemNames.get(slotsRewards.size() - 1)));
             gui.open(player);
             return;
         }
 
-        gui.setItem(slot, buttons.get("bonusowy_wygasly").getGuiItem(player, sounds.getError(), itemNames.get(slotsRewards.size() - 1)));
-
+        gui.setItem(slot, ItemBuilder.from(buttons.get("bonusowy_zamkniety").getItem(itemNames.get(slotsRewards.size() - 1))).asGuiItem(event -> {
+            UtilMessage.playSound(player, sounds.getSuccess());
+            gui.updateItem(slot, buttons.get("bonusowy_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(slotsRewards.size() - 1)));
+            calendarPlayer.addStreak();
+        }));
         gui.open(player);
     }
 }

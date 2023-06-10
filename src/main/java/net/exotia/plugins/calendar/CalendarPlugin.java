@@ -92,8 +92,6 @@ public final class CalendarPlugin extends JavaPlugin {
     }
 
     private void cleanUp() {
-        getServer().getMessenger().unregisterOutgoingPluginChannel(this);
-
         configurationMessage.save();
         configurationGui.save();
         configurationRewards.save();

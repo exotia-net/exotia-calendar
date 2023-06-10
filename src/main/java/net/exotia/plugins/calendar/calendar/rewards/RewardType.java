@@ -3,6 +3,7 @@ package net.exotia.plugins.calendar.calendar.rewards;
 import net.exotia.bridge.api.ExotiaBridgeProvider;
 import net.exotia.bridge.api.user.ApiEconomyService;
 import net.exotia.plugins.calendar.utils.UtilItem;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,6 +27,13 @@ public enum RewardType {
         @Override
         public void rewardPlayer(Player player, Reward reward) {
             player.setLevel(player.getLevel() + reward.getAmount());
+        }
+    },
+    COMMAND {
+        @Override
+        public void rewardPlayer(Player player, Reward reward) {
+            if (reward.getId().contains("%player_name%")) Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), reward.getId().replace("%player_name%", player.getDisplayName()));
+            else Bukkit.getServer().dispatchCommand(player, reward.getId());
         }
     };
 

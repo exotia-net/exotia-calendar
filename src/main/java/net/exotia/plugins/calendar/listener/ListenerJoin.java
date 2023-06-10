@@ -25,6 +25,10 @@ public class ListenerJoin implements Listener {
         Player player = event.getPlayer();
         CalendarPlayer calendarPlayer = calendarPlayers.getPlayer(player.getUniqueId());
 
+//        ApiCalendarService calendarService = ExotiaBridgeProvider.getProvider().getCalendarService();
+//        TODO
+//        calendarService.
+
         if (!calendarPlayer.canObtain(configurationGui.getGuis().get("calendar").getSlotsRewards().size())) return;
 
         calendarPlayer.addNotObtained(calendarPlayer.getStep());
