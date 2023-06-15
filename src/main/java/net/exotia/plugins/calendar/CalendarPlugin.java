@@ -7,7 +7,6 @@ import eu.okaeri.injector.Injector;
 import eu.okaeri.injector.OkaeriInjector;
 import lombok.Getter;
 import net.exotia.plugins.calendar.calendar.gui.GuiCalendar;
-import net.exotia.plugins.calendar.calendar.player.CalendarPlayers;
 import net.exotia.plugins.calendar.command.CommandCalendar;
 import net.exotia.plugins.calendar.command.CommandReload;
 import net.exotia.plugins.calendar.configuration.ConfigurationFactory;
@@ -68,7 +67,6 @@ public final class CalendarPlugin extends JavaPlugin {
     }
 
     private void setupUtils() {
-        injector.registerInjectable(new CalendarPlayers());
         injector.registerInjectable(injector.createInstance(GuiCalendar.class));
     }
 

@@ -19,7 +19,7 @@ public class ConfigurationRewards extends OkaeriConfig {
         rewards.put(0, Arrays.asList(
             Reward.builder()
                 .rewardType("item")
-                .id("jedzenie_owoce_kiwi")
+                .id("food_fruit_kiwi")
                 .itemType("oraxen")
                 .displayName("Kiwi dnia pierwszego")
                 .amount(1)
@@ -28,7 +28,7 @@ public class ConfigurationRewards extends OkaeriConfig {
         rewards.put(1, Arrays.asList(
             Reward.builder()
                 .rewardType("item")
-                .id("jedzenie_owoce_truskawka")
+                .id("food_fruit_strawberry")
                 .itemType("oraxen")
                 .displayName("Truskawka dnia drugiego")
                 .amount(1)
@@ -37,7 +37,7 @@ public class ConfigurationRewards extends OkaeriConfig {
         rewards.put(2, Arrays.asList(
             Reward.builder()
                 .rewardType("item")
-                .id("jedzenie_owoce_borowki")
+                .id("food_fruit_bilberry")
                 .itemType("oraxen")
                 .displayName("Borówki dnia trzeciego")
                 .amount(1)
@@ -46,7 +46,7 @@ public class ConfigurationRewards extends OkaeriConfig {
         rewards.put(3, Arrays.asList(
             Reward.builder()
                 .rewardType("item")
-                .id("jedzenie_owoce_wisnia")
+                .id("food_fruit_cherry")
                 .itemType("oraxen")
                 .displayName("Wiśnia dnia czwartego")
                 .amount(1)
@@ -55,7 +55,7 @@ public class ConfigurationRewards extends OkaeriConfig {
         rewards.put(4, Arrays.asList(
             Reward.builder()
                 .rewardType("item")
-                .id("jedzenie_owoce_banan")
+                .id("food_fruit_banana")
                 .itemType("oraxen")
                 .displayName("Banan dnia piątego")
                 .amount(1)
@@ -64,7 +64,7 @@ public class ConfigurationRewards extends OkaeriConfig {
         rewards.put(5, Arrays.asList(
             Reward.builder()
                 .rewardType("item")
-                .id("jedzenie_nabial_ser")
+                .id("food_dairy_cheese")
                 .itemType("oraxen")
                 .displayName("Bonusowy Ser")
                 .amount(1)

@@ -1,15 +1,22 @@
 package net.exotia.plugins.calendar.calendar.gui;
 
 import dev.triumphteam.gui.builder.item.ItemBuilder;
+import dev.triumphteam.gui.guis.BaseGui;
 import dev.triumphteam.gui.guis.Gui;
+import dev.triumphteam.gui.guis.GuiItem;
 import eu.okaeri.injector.annotation.Inject;
-import net.exotia.plugins.calendar.calendar.player.CalendarPlayer;
-import net.exotia.plugins.calendar.calendar.player.CalendarPlayers;
+import net.exotia.bridge.api.ExotiaBridgeProvider;
+import net.exotia.bridge.api.entities.CalendarUser;
+import net.exotia.bridge.api.user.ApiUser;
+import net.exotia.bridge.api.user.ApiUserService;
+import net.exotia.plugins.calendar.calendar.ServiceCalendar;
 import net.exotia.plugins.calendar.calendar.rewards.Reward;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
 import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
 import net.exotia.plugins.calendar.configuration.ConfigurationRewards;
+import net.exotia.plugins.calendar.configuration.section.SectionCalendar;
 import net.exotia.plugins.calendar.utils.UtilMessage;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -24,27 +31,32 @@ public class GuiCalendar {
     private ConfigurationGui configurationGui;
     @Inject
     private ConfigurationRewards configurationRewards;
-    @Inject
-    private CalendarPlayers calendarPlayers;
+
+    public void setupGui(BaseGui gui, List<Integer> emptySlots, ConfigurationMessage configurationMessage) {
+        GuiItem filling = ItemBuilder.from(Material.AIR).asGuiItem();
+        gui.setItem(emptySlots, filling);
+        gui.disableAllInteractions();
+        gui.setOpenGuiAction(event -> UtilMessage.playSound((Player) event.getPlayer(), configurationMessage.getSounds().getClick()));
+    }
 
     public void open(Player player) {
         ConfigurationMessage.Sounds sounds = configurationMessage.getSounds();
-        GuiTemplate guiTemplate = configurationGui.getGuis().get("calendar");
-        Gui gui = Gui.gui().title(UtilMessage.getComponent("<white>" + guiTemplate.getTitle())).rows(guiTemplate.getSize()).create();
-        CalendarPlayer calendarPlayer = calendarPlayers.getPlayer(player.getUniqueId());
-        HashMap<String, GuiButton> buttons = guiTemplate.getButtons();
+        SectionCalendar guiConfiguration = configurationGui.getGuiCalendar();
+        Gui gui = Gui.gui().title(UtilMessage.getComponent("<white>" + guiConfiguration.getTitle())).rows(guiConfiguration.getSize()).create();
+        CalendarUser calendarUser = ServiceCalendar.getCalendar(player);
+        HashMap<String, GuiButton> buttons = guiConfiguration.getButtons();
         HashMap<Integer, List<Reward>> rewards = configurationRewards.getRewards();
-        List<Integer> slotsRewards = guiTemplate.getSlotsRewards();
-        List<Integer> slotsStreak = guiTemplate.getSlotsStreak();
-        int streakDays = calendarPlayer.getStreakDays();
+        List<Integer> slotsRewards = guiConfiguration.getSlotsRewards();
+        List<Integer> slotsStreak = guiConfiguration.getSlotsStreak();
+        int streakDays = calendarUser.getStreakDays();
 
-        if (calendarPlayer.getStep() == slotsRewards.size() && calendarPlayer.getNotObtainedRewards().isEmpty()) {
+        if (calendarUser.getStep() == slotsRewards.size() && calendarUser.getNotObtainedRewards().isEmpty()) {
             UtilMessage.playSound(player, sounds.getActivate());
             UtilMessage.sendMessage(player, configurationMessage.getCommandsCalendar().getFinished());
             return;
         }
 
-        GuiTemplate.setupGui(gui, guiTemplate.getSlotsEmpty(), configurationMessage);
+        setupGui(gui, guiConfiguration.getSlotsEmpty(), configurationMessage);
 
         HashMap<Integer, List<String>> itemNames = new HashMap<>();
 
@@ -55,41 +67,51 @@ public class GuiCalendar {
             itemNames.put(index, itemList);
         }
 
-        for (int i = 0; i < slotsRewards.size() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("zwykly_wygasly").getGuiItem(player, sounds.getError(), itemNames.get(i), String.valueOf(i + 1)));
-        for (int i = 0; i <= calendarPlayer.getStep() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("zwykly_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(i), String.valueOf(i + 1)));
+        for (int i = 0; i < slotsRewards.size() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("basic_not_active").getGuiItem(player, sounds.getError(), itemNames.get(i), String.valueOf(i + 1)));
+        for (int i = 0; i <= calendarUser.getStep() - 1; i++) gui.setItem(slotsRewards.get(i), buttons.get("basic_opened").getGuiItem(player, sounds.getStep(), itemNames.get(i), String.valueOf(i + 1)));
 
-        slotsStreak.forEach(slot -> gui.setItem(slot, buttons.get("streak_wygasly").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays))));
-        for (int i = 0; i < streakDays; i++) gui.setItem(slotsStreak.get(i), buttons.get("streak_aktywny").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays)));
+        slotsStreak.forEach(slot -> gui.setItem(slot, buttons.get("streak_not_active").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays))));
+        for (int i = 0; i < streakDays; i++) gui.setItem(slotsStreak.get(i), buttons.get("streak_active").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays)));
 
-        for (int i = 0; i < calendarPlayer.getNotObtainedRewards().size(); i++) {
+        for (int i = 0; i < calendarUser.getNotObtainedRewards().size(); i++) {
             int index = i;
-            int slot = calendarPlayer.getNotObtainedRewards().get(index);
-            gui.setItem(slotsRewards.get(slot), ItemBuilder.from(buttons.get("zwykly_zamkniety").getItem(itemNames.get(index), String.valueOf(slot + 1))).asGuiItem(event -> {
+            int slot = calendarUser.getNotObtainedRewards().get(index);
+            gui.setItem(slotsRewards.get(slot), ItemBuilder.from(buttons.get("basic_closed").getItem(itemNames.get(index), String.valueOf(slot + 1))).asGuiItem(event -> {
                 UtilMessage.playSound(player, sounds.getActivate());
                 UtilMessage.sendMessage(player, configurationMessage.getCommandsCalendar().getObtain(), String.valueOf(slot + 1));
                 for (Reward reward : rewards.get(index)) reward.rewardPlayer(player);
-                gui.updateItem(slotsRewards.get(slot), buttons.get("zwykly_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(index), String.valueOf(index + 1)));
-                calendarPlayer.removeNotObtained(index);
+                gui.updateItem(slotsRewards.get(slot), buttons.get("basic_opened").getGuiItem(player, sounds.getStep(), itemNames.get(index), String.valueOf(index + 1)));
+                calendarUser.removeNotObtained(index);
+                ExotiaBridgeProvider.getProvider().getUserService().getUser(player.getUniqueId()).setCalendar(calendarUser);
+                ApiUserService userService = ExotiaBridgeProvider.getProvider().getUserService();
+                ApiUser apiUser = userService.getUser(player.getUniqueId());
+
+                userService.saveCalendar(apiUser);
             }));
         }
 
         int slot = slotsRewards.get(slotsRewards.size() - 1);
 
         if (streakDays > slotsStreak.size()) {
-            gui.setItem(slot, buttons.get("bonusowy_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(slotsRewards.size() - 1)));
+            gui.setItem(slot, buttons.get("bonus_opened").getGuiItem(player, sounds.getStep(), itemNames.get(slotsRewards.size() - 1)));
             return;
         }
 
         if (streakDays != slotsStreak.size()) {
-            gui.setItem(slot, buttons.get("bonusowy_wygasly").getGuiItem(player, sounds.getError(), itemNames.get(slotsRewards.size() - 1)));
+            gui.setItem(slot, buttons.get("bonus_not_active").getGuiItem(player, sounds.getError(), itemNames.get(slotsRewards.size() - 1)));
             gui.open(player);
             return;
         }
 
-        gui.setItem(slot, ItemBuilder.from(buttons.get("bonusowy_zamkniety").getItem(itemNames.get(slotsRewards.size() - 1))).asGuiItem(event -> {
+        gui.setItem(slot, ItemBuilder.from(buttons.get("bonus_closed").getItem(itemNames.get(slotsRewards.size() - 1))).asGuiItem(event -> {
             UtilMessage.playSound(player, sounds.getSuccess());
-            gui.updateItem(slot, buttons.get("bonusowy_otwarty").getGuiItem(player, sounds.getStep(), itemNames.get(slotsRewards.size() - 1)));
-            calendarPlayer.addStreak();
+            gui.updateItem(slot, buttons.get("bonus_opened").getGuiItem(player, sounds.getStep(), itemNames.get(slotsRewards.size() - 1)));
+            calendarUser.addStreak();
+            ExotiaBridgeProvider.getProvider().getUserService().getUser(player.getUniqueId()).setCalendar(calendarUser);
+            ApiUserService userService = ExotiaBridgeProvider.getProvider().getUserService();
+            ApiUser apiUser = userService.getUser(player.getUniqueId());
+
+            userService.saveCalendar(apiUser);
         }));
         gui.open(player);
     }

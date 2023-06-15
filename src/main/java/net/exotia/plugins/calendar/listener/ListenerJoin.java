@@ -1,8 +1,11 @@
 package net.exotia.plugins.calendar.listener;
 
 import eu.okaeri.injector.annotation.Inject;
-import net.exotia.plugins.calendar.calendar.player.CalendarPlayer;
-import net.exotia.plugins.calendar.calendar.player.CalendarPlayers;
+import net.exotia.bridge.api.ExotiaBridgeProvider;
+import net.exotia.bridge.api.entities.CalendarUser;
+import net.exotia.bridge.api.user.ApiUser;
+import net.exotia.bridge.api.user.ApiUserService;
+import net.exotia.plugins.calendar.calendar.ServiceCalendar;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
 import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
 import net.exotia.plugins.calendar.utils.UtilMessage;
@@ -10,37 +13,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 public class ListenerJoin implements Listener {
     @Inject
     private ConfigurationMessage configurationMessage;
     @Inject
     private ConfigurationGui configurationGui;
-    @Inject
-    private CalendarPlayers calendarPlayers;
 
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        CalendarPlayer calendarPlayer = calendarPlayers.getPlayer(player.getUniqueId());
+        CalendarUser calendarUser = ServiceCalendar.getCalendar(player);
 
-//        ApiCalendarService calendarService = ExotiaBridgeProvider.getProvider().getCalendarService();
-//        TODO
-//        calendarService.
+        if (!calendarUser.canObtain(configurationGui.getGuiCalendar().getSlotsRewards().size())) return;
 
-        if (!calendarPlayer.canObtain(configurationGui.getGuis().get("calendar").getSlotsRewards().size())) return;
+        calendarUser.addNotObtained(calendarUser.getStep());
+        calendarUser.addStep(configurationGui.getGuiCalendar().getSlotsRewards().size());
+        ExotiaBridgeProvider.getProvider().getUserService().getUser(player.getUniqueId()).setCalendar(calendarUser);
+        ApiUserService userService = ExotiaBridgeProvider.getProvider().getUserService();
+        ApiUser apiUser = userService.getUser(player.getUniqueId());
 
-        calendarPlayer.addNotObtained(calendarPlayer.getStep());
-        calendarPlayer.addStep(configurationGui.getGuis().get("calendar").getSlotsRewards().size());
-        UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarPlayer.getStep()));
-    }
+        userService.saveCalendar(apiUser);
 
-    @EventHandler
-    public void onQuitEvent(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-//        ApiCalendarService calendarService = ExotiaBridgeProvider.getProvider().getCalendarService();
-//        TODO
-//        calendarService.
+        UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarUser.getStep()));
     }
 }
