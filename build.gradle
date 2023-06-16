@@ -46,7 +46,7 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.2'
     compileOnly 'com.github.oraxen:oraxen:-SNAPSHOT'
 
-    compileOnly 'net.exotia.bridge:api:1.0.7'
+    compileOnly 'net.exotia.bridge:api:1.0.8'
 }
 
 jar {

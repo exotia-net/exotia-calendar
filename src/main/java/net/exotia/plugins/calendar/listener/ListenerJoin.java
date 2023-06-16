@@ -1,10 +1,7 @@
 package net.exotia.plugins.calendar.listener;
 
 import eu.okaeri.injector.annotation.Inject;
-import net.exotia.bridge.api.ExotiaBridgeProvider;
 import net.exotia.bridge.api.entities.CalendarUser;
-import net.exotia.bridge.api.user.ApiUser;
-import net.exotia.bridge.api.user.ApiUserService;
 import net.exotia.plugins.calendar.calendar.ServiceCalendar;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
 import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
@@ -29,11 +26,7 @@ public class ListenerJoin implements Listener {
 
         calendarUser.addNotObtained(calendarUser.getStep());
         calendarUser.addStep(configurationGui.getGuiCalendar().getSlotsRewards().size());
-        ExotiaBridgeProvider.getProvider().getUserService().getUser(player.getUniqueId()).setCalendar(calendarUser);
-        ApiUserService userService = ExotiaBridgeProvider.getProvider().getUserService();
-        ApiUser apiUser = userService.getUser(player.getUniqueId());
-
-        userService.saveCalendar(apiUser);
+        ServiceCalendar.saveCalendar(player);
 
         UtilMessage.sendMessage(player, configurationMessage.getEventsJoin().getObtainable(), String.valueOf(calendarUser.getStep()));
     }

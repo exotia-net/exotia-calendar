@@ -5,10 +5,7 @@ import dev.triumphteam.gui.guis.BaseGui;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import eu.okaeri.injector.annotation.Inject;
-import net.exotia.bridge.api.ExotiaBridgeProvider;
 import net.exotia.bridge.api.entities.CalendarUser;
-import net.exotia.bridge.api.user.ApiUser;
-import net.exotia.bridge.api.user.ApiUserService;
 import net.exotia.plugins.calendar.calendar.ServiceCalendar;
 import net.exotia.plugins.calendar.calendar.rewards.Reward;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
@@ -32,7 +29,7 @@ public class GuiCalendar {
     @Inject
     private ConfigurationRewards configurationRewards;
 
-    public void setupGui(BaseGui gui, List<Integer> emptySlots, ConfigurationMessage configurationMessage) {
+    public void setupGui(BaseGui gui, List<Integer> emptySlots) {
         GuiItem filling = ItemBuilder.from(Material.AIR).asGuiItem();
         gui.setItem(emptySlots, filling);
         gui.disableAllInteractions();
@@ -56,7 +53,7 @@ public class GuiCalendar {
             return;
         }
 
-        setupGui(gui, guiConfiguration.getSlotsEmpty(), configurationMessage);
+        setupGui(gui, guiConfiguration.getSlotsEmpty());
 
         HashMap<Integer, List<String>> itemNames = new HashMap<>();
 
@@ -82,11 +79,7 @@ public class GuiCalendar {
                 for (Reward reward : rewards.get(index)) reward.rewardPlayer(player);
                 gui.updateItem(slotsRewards.get(slot), buttons.get("basic_opened").getGuiItem(player, sounds.getStep(), itemNames.get(index), String.valueOf(index + 1)));
                 calendarUser.removeNotObtained(index);
-                ExotiaBridgeProvider.getProvider().getUserService().getUser(player.getUniqueId()).setCalendar(calendarUser);
-                ApiUserService userService = ExotiaBridgeProvider.getProvider().getUserService();
-                ApiUser apiUser = userService.getUser(player.getUniqueId());
-
-                userService.saveCalendar(apiUser);
+                ServiceCalendar.saveCalendar(player);
             }));
         }
 
@@ -107,12 +100,9 @@ public class GuiCalendar {
             UtilMessage.playSound(player, sounds.getSuccess());
             gui.updateItem(slot, buttons.get("bonus_opened").getGuiItem(player, sounds.getStep(), itemNames.get(slotsRewards.size() - 1)));
             calendarUser.addStreak();
-            ExotiaBridgeProvider.getProvider().getUserService().getUser(player.getUniqueId()).setCalendar(calendarUser);
-            ApiUserService userService = ExotiaBridgeProvider.getProvider().getUserService();
-            ApiUser apiUser = userService.getUser(player.getUniqueId());
-
-            userService.saveCalendar(apiUser);
+            ServiceCalendar.saveCalendar(player);
         }));
+
         gui.open(player);
     }
 }
