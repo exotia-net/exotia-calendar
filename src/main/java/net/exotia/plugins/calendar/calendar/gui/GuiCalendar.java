@@ -70,17 +70,19 @@ public class GuiCalendar {
         slotsStreak.forEach(slot -> gui.setItem(slot, buttons.get("streak_not_active").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays))));
         for (int i = 0; i < streakDays; i++) gui.setItem(slotsStreak.get(i), buttons.get("streak_active").getGuiItem(player, sounds.getStep(), new ArrayList<>(), String.valueOf(streakDays)));
 
-        for (int i = 0; i < calendarUser.getNotObtainedRewards().size(); i++) {
-            int index = i;
-            int slot = calendarUser.getNotObtainedRewards().get(index);
-            gui.setItem(slotsRewards.get(slot), ItemBuilder.from(buttons.get("basic_closed").getItem(itemNames.get(index), String.valueOf(slot + 1))).asGuiItem(event -> {
-                UtilMessage.playSound(player, sounds.getActivate());
-                UtilMessage.sendMessage(player, configurationMessage.getCommandsCalendar().getObtain(), String.valueOf(slot + 1));
-                for (Reward reward : rewards.get(index)) reward.rewardPlayer(player);
-                gui.updateItem(slotsRewards.get(slot), buttons.get("basic_opened").getGuiItem(player, sounds.getStep(), itemNames.get(index), String.valueOf(index + 1)));
-                calendarUser.removeNotObtained(index);
-                ServiceCalendar.saveCalendar(player);
-            }));
+        if (calendarUser.getNotObtainedRewards() != null) {
+            for (int i = 0; i < calendarUser.getNotObtainedRewards().size(); i++) {
+                int index = i;
+                int slot = calendarUser.getNotObtainedRewards().get(index);
+                gui.setItem(slotsRewards.get(slot), ItemBuilder.from(buttons.get("basic_closed").getItem(itemNames.get(index), String.valueOf(slot + 1))).asGuiItem(event -> {
+                    UtilMessage.playSound(player, sounds.getActivate());
+                    UtilMessage.sendMessage(player, configurationMessage.getCommandsCalendar().getObtain(), String.valueOf(slot + 1));
+                    for (Reward reward : rewards.get(index)) reward.rewardPlayer(player);
+                    gui.updateItem(slotsRewards.get(slot), buttons.get("basic_opened").getGuiItem(player, sounds.getStep(), itemNames.get(index), String.valueOf(index + 1)));
+                    calendarUser.removeNotObtained(index);
+                    ServiceCalendar.saveCalendar(player);
+                }));
+            }
         }
 
         int slot = slotsRewards.get(slotsRewards.size() - 1);

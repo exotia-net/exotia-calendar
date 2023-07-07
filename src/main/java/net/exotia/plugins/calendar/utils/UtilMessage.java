@@ -8,7 +8,6 @@ import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UtilMessage {
@@ -34,9 +33,7 @@ public class UtilMessage {
     }
 
     public static List<String> convertComponent(List<String> list, String... values) {
-        List<String> newList = new ArrayList<>();
-        for (String line : list) newList.add(LegacyComponentSerializer.legacySection().serialize(replacePlaceholders("<gray>" + line, values)));
-        return newList;
+        return list.stream().map(line -> LegacyComponentSerializer.legacySection().serialize(replacePlaceholders("<gray>" + line, values))).toList();
     }
 
     public static void playSound(Player player, String soundName) {

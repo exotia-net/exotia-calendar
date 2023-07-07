@@ -2,6 +2,7 @@ package net.exotia.plugins.calendar.listener;
 
 import eu.okaeri.injector.annotation.Inject;
 import net.exotia.bridge.api.entities.CalendarUser;
+import net.exotia.plugins.calendar.CalendarPlugin;
 import net.exotia.plugins.calendar.calendar.ServiceCalendar;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
 import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
@@ -12,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class ListenerJoin implements Listener {
+    @Inject
+    private CalendarPlugin calendarPlugin;
     @Inject
     private ConfigurationMessage configurationMessage;
     @Inject

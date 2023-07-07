@@ -10,6 +10,7 @@ import java.util.List;
 public class UtilItem {
     public static ItemStack getItem(String id, String type, String displayName, List<String> lore, int amount) {
         ItemStack item = (type.equalsIgnoreCase("minecraft")) ? new ItemStack(Material.valueOf(id.toUpperCase())) : OraxenItems.getItemById(id).build();
+        if (item == null) return new ItemStack(Material.STONE);
         ItemMeta meta = item.getItemMeta();
         if (amount > 0) item.setAmount(amount);
         if (meta == null || displayName == null || lore == null) return item;
