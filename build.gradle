@@ -14,7 +14,10 @@ repositories {
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
-    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven {
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
     maven { url 'https://repo.panda-lang.org/releases' }
     maven { url "https://storehouse.okaeri.eu/repository/maven-public/" }
     maven { url 'https://jitpack.io' }
@@ -22,31 +25,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-
-    implementation 'org.projectlombok:lombok:1.18.28'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
-
-    compileOnly 'org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT'
-
-    implementation 'eu.okaeri:okaeri-configs-yaml-bukkit:5.0.0-beta.3'
-    implementation 'eu.okaeri:okaeri-configs-serdes-bukkit:5.0.0-beta.3'
-    implementation 'eu.okaeri:okaeri-injector:2.1.0'
-
-    implementation 'dev.rollczi.litecommands:bukkit:2.8.8'
-
-    implementation 'dev.triumphteam:triumph-gui:3.1.2'
-
-    implementation 'net.kyori:adventure-api:4.14.0'
-    implementation 'net.kyori:adventure-platform-bukkit:4.3.0'
-    implementation 'net.kyori:adventure-text-minimessage:4.14.0'
-    implementation 'net.kyori:adventure-text-serializer-legacy:4.14.0'
-
-    compileOnly 'me.clip:placeholderapi:2.11.3'
-    compileOnly 'com.github.oraxen:oraxen:-SNAPSHOT'
-
-    compileOnly 'net.exotia.bridge:api:1.0.8'
+    compileOnly "io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT"
 }
 
 jar {
