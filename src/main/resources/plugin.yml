@@ -1,9 +1,9 @@
 name: ExotiaCalendar
-version: 1.3
+version: 1.4
 author: Exotia.net Team
 website: https://exotia.net/
 description: Spigot Plugin for Exotia.net daily reward system
 main: net.exotia.plugins.calendar.CalendarPlugin
-api-version: 1.19
+api-version: '1.20'
 softdepend: [ PlaceholderAPI, Oraxen ]
 depend: [ ExotiaBridge ]
