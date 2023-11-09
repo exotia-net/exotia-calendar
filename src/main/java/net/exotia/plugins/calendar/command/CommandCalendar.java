@@ -25,7 +25,7 @@ public class CommandCalendar {
     @Execute(name = "reset")
     @Permission("exotia.calendar.command.admin")
     public void reset(@Arg Player player) {
-        CalendarService.getCalendar(player).reset();
+//        CalendarService.getCalendar(player).reset();
     }
 
     @Execute(name = "last")
