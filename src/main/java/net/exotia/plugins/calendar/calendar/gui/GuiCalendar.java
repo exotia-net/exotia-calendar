@@ -6,7 +6,7 @@ import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import eu.okaeri.injector.annotation.Inject;
 import net.exotia.bridge.api.entities.CalendarUser;
-import net.exotia.plugins.calendar.calendar.ServiceCalendar;
+import net.exotia.plugins.calendar.calendar.CalendarService;
 import net.exotia.plugins.calendar.calendar.rewards.Reward;
 import net.exotia.plugins.calendar.configuration.ConfigurationGui;
 import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
@@ -40,7 +40,7 @@ public class GuiCalendar {
         ConfigurationMessage.Sounds sounds = configurationMessage.getSounds();
         SectionCalendar guiConfiguration = configurationGui.getGuiCalendar();
         Gui gui = Gui.gui().title(UtilMessage.getComponent("<white>" + guiConfiguration.getTitle())).rows(guiConfiguration.getSize()).create();
-        CalendarUser calendarUser = ServiceCalendar.getCalendar(player);
+        CalendarUser calendarUser = CalendarService.getCalendar(player);
         HashMap<String, GuiButton> buttons = guiConfiguration.getButtons();
         HashMap<Integer, List<Reward>> rewards = configurationRewards.getRewards();
         List<Integer> slotsRewards = guiConfiguration.getSlotsRewards();
@@ -79,7 +79,7 @@ public class GuiCalendar {
                 for (Reward reward : rewards.get(index)) reward.rewardPlayer(player);
                 gui.updateItem(slotsRewards.get(slot), buttons.get("basic_opened").getGuiItem(player, sounds.getStep(), itemNames.get(index), String.valueOf(index + 1)));
                 calendarUser.removeNotObtained(index);
-                ServiceCalendar.saveCalendar(player);
+                CalendarService.saveCalendar(player);
             }));
         }
 
@@ -100,7 +100,7 @@ public class GuiCalendar {
             UtilMessage.playSound(player, sounds.getSuccess());
             gui.updateItem(slot, buttons.get("bonus_opened").getGuiItem(player, sounds.getStep(), itemNames.get(slotsRewards.size() - 1)));
             calendarUser.addStreak();
-            ServiceCalendar.saveCalendar(player);
+            CalendarService.saveCalendar(player);
         }));
 
         gui.open(player);

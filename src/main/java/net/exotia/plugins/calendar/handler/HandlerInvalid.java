@@ -1,23 +1,20 @@
 package net.exotia.plugins.calendar.handler;
 
-import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.handle.InvalidUsageHandler;
-import dev.rollczi.litecommands.schematic.Schematic;
+import dev.rollczi.litecommands.handler.result.ResultHandlerChain;
+import dev.rollczi.litecommands.invalidusage.InvalidUsage;
+import dev.rollczi.litecommands.invalidusage.InvalidUsageHandler;
+import dev.rollczi.litecommands.invocation.Invocation;
 import eu.okaeri.injector.annotation.Inject;
-import net.exotia.plugins.calendar.configuration.ConfigurationMessage;
-import net.exotia.plugins.calendar.utils.UtilMessage;
+import net.exotia.plugins.nightmare.configuration.ConfigurationMessage;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.util.List;
 
 public class HandlerInvalid implements InvalidUsageHandler<CommandSender> {
     @Inject
     private ConfigurationMessage configurationMessage;
 
     @Override
-    public void handle(CommandSender sender, LiteInvocation invocation, Schematic schematic) {
-        UtilMessage.sendMessage(sender, configurationMessage.getCommandsInvalid().getInvalid());
-        UtilMessage.playSound((Player) sender, configurationMessage.getSounds().getError());
+    public void handle(Invocation<CommandSender> invocation, InvalidUsage<CommandSender> result, ResultHandlerChain<CommandSender> chain) {
+//        UtilMessage.sendMessage(sender, configurationMessage.getCommandsInvalid().getInvalid());
+//        UtilMessage.playSound((Player) sender, configurationMessage.getSounds().getError());
     }
 }
