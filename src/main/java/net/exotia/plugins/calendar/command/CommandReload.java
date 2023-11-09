@@ -1,8 +1,9 @@
 package net.exotia.plugins.calendar.command;
 
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
 import eu.okaeri.configs.exception.OkaeriException;
 import eu.okaeri.injector.annotation.Inject;
 import net.exotia.plugins.calendar.configuration.ConfigurationFactory;
@@ -13,7 +14,7 @@ import net.exotia.plugins.calendar.utils.UtilMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Route(name = "calendar", aliases = {"kalendarz", "dzienne"})
+@Command(name = "calendar", aliases = {"kalendarz", "dzienne"})
 @Permission("exotia.calendar.command.admin")
 public class CommandReload {
     @Inject
@@ -25,8 +26,8 @@ public class CommandReload {
     @Inject
     private ConfigurationRewards configurationRewards;
 
-    @Execute(route = "admin reload")
-    public void reload(CommandSender sender) {
+    @Execute(name = "admin reload")
+    public void reload(@Context CommandSender sender) {
         try {
             configurationMessage.load(true);
             configurationGui.load(true);

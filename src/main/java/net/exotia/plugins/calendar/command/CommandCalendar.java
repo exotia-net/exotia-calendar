@@ -5,7 +5,6 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import eu.okaeri.injector.annotation.Inject;
-import net.exotia.plugins.calendar.calendar.CalendarService;
 import net.exotia.plugins.calendar.calendar.gui.GuiCalendar;
 import org.bukkit.entity.Player;
 

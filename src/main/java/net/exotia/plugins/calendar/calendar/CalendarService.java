@@ -1,9 +1,5 @@
 package net.exotia.plugins.calendar.calendar;
 
-import net.exotia.bridge.api.ExotiaBridgeProvider;
-import net.exotia.bridge.api.entities.CalendarUser;
-import net.exotia.bridge.api.user.ApiUserService;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 

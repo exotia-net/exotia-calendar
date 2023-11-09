@@ -1,7 +1,5 @@
 package net.exotia.plugins.calendar.calendar.rewards;
 
-import net.exotia.bridge.api.ExotiaBridgeProvider;
-import net.exotia.bridge.api.user.ApiEconomyService;
 import net.exotia.plugins.calendar.utils.UtilItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,9 +16,9 @@ public enum RewardType {
     CURRENCY {
         @Override
         public void rewardPlayer(Player player, Reward reward) {
-            ApiEconomyService economyService = ExotiaBridgeProvider.getProvider().getEconomyService();
-            economyService.give(player.getUniqueId(), reward.getAmount());
-            economyService.save(player.getUniqueId());
+//            ApiEconomyService economyService = ExotiaBridgeProvider.getProvider().getEconomyService();
+//            economyService.give(player.getUniqueId(), reward.getAmount());
+//            economyService.save(player.getUniqueId());
         }
     },
     LEVEL {
